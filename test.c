@@ -1,11 +1,7 @@
-#include<stdio.h>
-#include "fs_struct.h"
-
+#include "initFs.c"
+#include <stdio.h>
 int main(){
-  iNodeMapArray *i = (iNodeMapArray *)malloc(sizeof(iNodeMapArray));
-  
-  
-  printf("%d \n",sizeof(i->iNodeArray));
-
+  FILE *fp = fopen("myFileSystem.fs","w");
+  initFileSystem(fp);
   return 0;
 }

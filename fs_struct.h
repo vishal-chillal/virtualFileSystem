@@ -1,10 +1,12 @@
+#include <stdlib.h>
+#ifndef STRUCT
+#define STRUCT 1
 #define MAX_WRITABLE_SIZE 10
 #define FIX_BLOCK_SIZE 4
 #define HALF 2
 #define FS_SIZE (1024 *1024 * 1024)
 #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE)
 #define MAX_NO_OF_INODE (NO_OF_BLOCK / HALF)
-#include<stdlib.h>
 //flag for checking if the inode is for directory or file
 typedef enum {
   directory,
@@ -42,9 +44,9 @@ typedef struct iNode{
   struct containtDetailList *Head; // address of iNodes if it is a directory else addresses of indexBlocks for file
 }iNode;
 
-typedef struct iNodeMapArray{
+//typedef struct iNodeMapArray{
  iNode *iNodeArray;
-}iNodeMapArray;
+//}iNodeMapArray;
 
 typedef struct bitMap{
   alloacationFlag inodeBitMap[MAX_NO_OF_INODE];
@@ -54,18 +56,18 @@ typedef struct bitMap{
 typedef struct metadata
 {
   struct bitMap bitMapPointer;
-  struct iNodeMapArray iNodeMapArrayPointer;
+  //struct iNodeMapArray iNodeMapArrayPointer;
   
 }metadata;
 
 typedef struct superblock{
   
-  unsigned int iNodeMapArrayOffset;
-  unsigned int bitMap;
+  unsigned int iNodeArrayOffset;
+  unsigned int bitMapOffset;
   unsigned int nextFreeDataBlockOffset;
   unsigned int noOfFreeDataBlocks;
   unsigned int nextFreeInodeOffset;
   unsigned int rootDirInodeOffset;
   unsigned int noOfFreeInode;
 }superblock;
-
+#endif

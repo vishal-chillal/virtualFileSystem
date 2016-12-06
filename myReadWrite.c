@@ -1,4 +1,5 @@
-#include<stdlib.h>
+#include "fs_struct.h"
+#include <stdio.h>
 /* myRead:  Function returns a pointer to memory location having data from a file
             on success return ptr else NULL*/
 
