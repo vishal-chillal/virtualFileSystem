@@ -1,8 +1,9 @@
 #define MAX_WRITABLE_SIZE 10
 #define FIX_BLOCK_SIZE 4
-#define FS_SIZE (4 * 1024 * 1024 * 1024)
+#define HALF 2
+#define FS_SIZE (1024 *1024 * 1024)
 #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE)
-#define MAX_NO_OF_INODE (NO_OF_BLOCK / 2)
+#define MAX_NO_OF_INODE (NO_OF_BLOCK / HALF)
 #include<stdlib.h>
 //flag for checking if the inode is for directory or file
 typedef enum {
@@ -42,7 +43,7 @@ typedef struct iNode{
 }iNode;
 
 typedef struct iNodeMapArray{
-  iNode iNodeArray[MAX_NO_OF_INODE];
+ iNode *iNodeArray;
 }iNodeMapArray;
 
 typedef struct bitMap{
@@ -57,4 +58,14 @@ typedef struct metadata
   
 }metadata;
 
+typedef struct superblock{
+  
+  unsigned int iNodeMapArrayOffset;
+  unsigned int bitMap;
+  unsigned int nextFreeDataBlockOffset;
+  unsigned int noOfFreeDataBlocks;
+  unsigned int nextFreeInodeOffset;
+  unsigned int rootDirInodeOffset;
+  unsigned int noOfFreeInode;
+}superblock;
 
