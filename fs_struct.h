@@ -2,7 +2,7 @@
 #ifndef STRUCT
 #define STRUCT 1
 #define MAX_WRITABLE_SIZE 10
-#define FIX_BLOCK_SIZE 4
+#define FIX_BLOCK_SIZE 1024
 #define HALF 2
 #define FS_SIZE (1024 *1024 * 1024)
 #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE)
