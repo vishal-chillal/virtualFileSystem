@@ -15,6 +15,8 @@ int main()
     }
   else
     readFileSystem(fp);
+  // char ip[10];
+  //  getCmd(ip);
   return 0;
 }
 

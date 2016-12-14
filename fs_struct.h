@@ -2,22 +2,25 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
+
 #ifndef STRUCT
 #define STRUCT 1
-//#define MAX_WRITABLE_SIZE 10
 
-/* #define FIX_BLOCK_SIZE (4*1024) //4KB */
-/* #define HALF 2 */
-/* #define FS_SIZE (1024 *1024 * 1024) //1GB */
-/* #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE) */
-/* #define TOTAL_NO_OF_INDEX_BLOCK (NO_OF_BLOCK / HALF) */
-/* #define MAX_NO_OF_INODE 7864                       // (NO_OF_BLOCK *(floor(3/100))) */
-#define FIX_BLOCK_SIZE (16) //4KB
+#define FIX_BLOCK_SIZE (4*1024) //4KB
 #define HALF 2
-#define FS_SIZE (16 * 16) //1GB
+#define FS_SIZE (1024 *1024 * 1024) //1GB
 #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE)
 #define TOTAL_NO_OF_INDEX_BLOCK (NO_OF_BLOCK / HALF)
-#define MAX_NO_OF_INODE 1                       // (NO_OF_BLOCK *(floor(3/100)))
+#define MAX_NO_OF_INODE 7864                       // (NO_OF_BLOCK *(floor(3/100)))
+
+
+/* #define FIX_BLOCK_SIZE (16) //4KB */
+/* #define HALF 2 */
+/* #define FS_SIZE (16 * 16) //1GB */
+/* #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE) */
+/* #define TOTAL_NO_OF_INDEX_BLOCK (NO_OF_BLOCK / HALF) */
+/* #define MAX_NO_OF_INODE 1                       // (NO_OF_BLOCK *(floor(3/100))) */
 
 
 //flag for checking if the inode is for directory or file
@@ -51,7 +54,7 @@ typedef struct containtDetailList{
 }containtDetailList;
 
 typedef struct iNode{
-  iNodeFlag flag ;//enum checking weather it is for directory or file
+  bool flag ;//enum checking weather it is for directory or file
   int fSizeDetails; //file size by actual characters in file
   char fileName[32]; 
   struct containtDetailList *Head; // address of iNodes if it is a directory else addresses of indexBlocks for file
@@ -62,8 +65,8 @@ typedef struct iNode{
 //}iNodeMapArray;
 
 typedef struct bitMap{
-  alloacationFlag iNodeBitMap[MAX_NO_OF_INODE];
-  alloacationFlag blockBitMap[NO_OF_BLOCK];
+  bool iNodeBitMap[MAX_NO_OF_INODE];
+  bool blockBitMap[NO_OF_BLOCK];
 }bitMap;
 
 typedef struct metadata
@@ -84,7 +87,8 @@ typedef struct superblock{
   unsigned int noOfFreeInode;
 }superblock;
 #endif
-void creatingRootDir(FILE*);
+
+void creatingRootDir();
 int checkNextFreeiNode(bitMap *bMap);
 void initFileSystem(FILE *fp);
 void readFileSystem(FILE*fp);

@@ -18,43 +18,25 @@ void readFileSystem(FILE *fp)
       printf("Allocation to bitMap failed\n");
       return ;
     }
-  /* if(bMap){ */
-  /*   for (i = 0; i < MAX_NO_OF_INODE; i++)  */
-  /*     bMap -> iNodeBitMap[i] = notAllocated; */
-  /*   for (i = 0; i < NO_OF_BLOCK ; i++)  */
-  /*     bMap -> blockBitMap[i] = notAllocated;     */
-  /* } */
   iNodeArray = (iNode *) malloc(sizeof(iNode)*MAX_NO_OF_INODE);
   if(!iNodeArray){
     printf("allocation to iNodeArray Failed\n");
   }
-  /* if(iNodeArray) { */
-  /*   creatingRootDir(); */
-  /*   bMap ->iNodeBitMap[0] = allocated; */
-  /*   bMap ->blockBitMap[0] = allocated; */
-  /* } */
+  //  bool arr[10] ;
   
- 
-  /* sb->bitMapOffset = sizeof(superblock); */
-  /* sb->iNodeArrayOffset = sb->bitMapOffset + sizeof(bitMap); */
-  /* sb->nextFreeInodeOffset = sb->bitMapOffset + sizeof(bitMap); */
-  /* sb->rootDirInodeOffset = sb->bitMapOffset + sizeof(bitMap); */
-  /* sb->nextFreeDataBlockOffset = sb->iNodeArrayOffset + sizeof(iNode)*MAX_NO_OF_INODE; */
-  /* sb->noOfFreeInode = MAX_NO_OF_INODE-1; */
-  /* sb->noOfFreeDataBlocks = NO_OF_BLOCK-1; */
-
-  
-
-  myRead(sb,sizeof(sb),1,fp,0);
+  myRead(sb,sizeof(superblock),1,fp,0);
+  //  myRead(arr,sizeof(bool),10,fp,sb->bitMapOffset);
   myRead(bMap,sizeof(bitMap),1,fp,sb->bitMapOffset);
-  //myRead(iNodeArray,sizeof(iNode)*MAX_NO_OF_INODE,1,fp,sb->iNodeArrayOffset);
+  myRead(iNodeArray,sizeof(iNode)*MAX_NO_OF_INODE,1,fp,sb->iNodeArrayOffset);
 
-  printf("%d\n",sb->noOfFreeDataBlocks );
-  printf("%d\n",bMap->iNodeBitMap[0] );
-  int i;
-  for (i = 0; i < NO_OF_BLOCK; i++) {
-    printf("%d\t",bMap->blockBitMap[0] );    
-  }
+  printf("%d\n",sb->noOfFreeInode );
+  //  printf("%d\n",arr[0] );
+  
+  printf("%d\n",iNodeArray[0].fSizeDetails );
+  /* int i; */
+  /* for (i = 0; i < NO_OF_BLOCK; i++) { */
+  /*   printf("%d\t",bMap->blockBitMap[0] );     */
+  /* } */
 
    printf("\n");
   free (sb);
