@@ -1,16 +1,15 @@
 #include "fs_struct.h"
-#include <stdio.h>
 /* myRead:  Function returns a pointer to memory location having data from a file
             on success return ptr else NULL*/
 
-void *myRead(void *ptr,int size, int nmemb, FILE *fp, int offset){
+int myRead(void *ptr,int size, int nmemb, FILE *fp, int offset){
 
  
   fseek(fp, SEEK_SET, offset);
   if(fread(ptr, size, nmemb, fp)){
-    return ptr;
+    return 1;
   }
-  return NULL;
+  return 0;
 }
 
 /* myWrite:  Function writes  a data from memory location to a file 

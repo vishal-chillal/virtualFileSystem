@@ -1,19 +1,32 @@
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
 #ifndef STRUCT
 #define STRUCT 1
-#define MAX_WRITABLE_SIZE 10
-#define FIX_BLOCK_SIZE 1024
+//#define MAX_WRITABLE_SIZE 10
+
+/* #define FIX_BLOCK_SIZE (4*1024) //4KB */
+/* #define HALF 2 */
+/* #define FS_SIZE (1024 *1024 * 1024) //1GB */
+/* #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE) */
+/* #define TOTAL_NO_OF_INDEX_BLOCK (NO_OF_BLOCK / HALF) */
+/* #define MAX_NO_OF_INODE 7864                       // (NO_OF_BLOCK *(floor(3/100))) */
+#define FIX_BLOCK_SIZE (16) //4KB
 #define HALF 2
-#define FS_SIZE (1024 *1024 * 1024)
+#define FS_SIZE (16 * 16) //1GB
 #define NO_OF_BLOCK (FS_SIZE / FIX_BLOCK_SIZE)
-#define MAX_NO_OF_INODE (NO_OF_BLOCK / HALF)
+#define TOTAL_NO_OF_INDEX_BLOCK (NO_OF_BLOCK / HALF)
+#define MAX_NO_OF_INODE 1                       // (NO_OF_BLOCK *(floor(3/100)))
+
+
 //flag for checking if the inode is for directory or file
-typedef enum {
+typedef enum  inodeFlag{
   directory,
   file
 } iNodeFlag;
 
-typedef enum {
+typedef enum alloacationFlag{
   notAllocated,
   allocated
 } alloacationFlag;
@@ -49,7 +62,7 @@ typedef struct iNode{
 //}iNodeMapArray;
 
 typedef struct bitMap{
-  alloacationFlag inodeBitMap[MAX_NO_OF_INODE];
+  alloacationFlag iNodeBitMap[MAX_NO_OF_INODE];
   alloacationFlag blockBitMap[NO_OF_BLOCK];
 }bitMap;
 
@@ -71,3 +84,12 @@ typedef struct superblock{
   unsigned int noOfFreeInode;
 }superblock;
 #endif
+void creatingRootDir(FILE*);
+int checkNextFreeiNode(bitMap *bMap);
+void initFileSystem(FILE *fp);
+void readFileSystem(FILE*fp);
+int myRead(void *ptr,int size, int nmemb, FILE *fp, int offset);
+int myWrite(void *ptr, int size, int nmemb, FILE *fp, int offset);
+int createDir(char *DirName);
+int createFile(char *FileName);
+void getCmd(char* ip);
